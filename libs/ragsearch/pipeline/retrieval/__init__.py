@@ -1,3 +1,7 @@
+"""
+This module contains the RetrievalFactory class to create different types of retrievers based on configuration.
+"""
+
 from .factory import RetrievalFactory
 
 def get_retriever(config: dict):

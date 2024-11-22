@@ -1,5 +1,8 @@
-import duckdb
+"""
+This module contains the DuckDBRetriever class to retrieve data from a DuckDB database.
+"""
 
+import duckdb
 
 class DuckDBRetriever:
     """
@@ -40,4 +43,3 @@ class DuckDBRetriever:
         """
         # Close connection
         self.conn.close()
-

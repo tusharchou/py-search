@@ -1,3 +1,6 @@
+"""
+This module contains the RetrievalFactory class to create different types of retrievers based on configuration.
+"""
 from .duckdb_retriever import DuckDBRetriever
 
 class RetrievalFactory:
@@ -20,7 +23,4 @@ class RetrievalFactory:
         """
         if config.get("retriever_type") == "duckdb":
             return DuckDBRetriever(config["db_path"])
-        else:
-            raise ValueError("Unsupported retriever type.")
-
-
+        raise ValueError("Unsupported retriever type.")
