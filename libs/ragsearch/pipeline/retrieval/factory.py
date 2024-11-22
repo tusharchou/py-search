@@ -1,6 +1,7 @@
 """
 This module contains the RetrievalFactory class
-to create different types of retrievers based on configuration.
+to create different types of retrievers based on
+configuration.
 """
 
 from .duckdb_retriever import DuckDBRetriever
