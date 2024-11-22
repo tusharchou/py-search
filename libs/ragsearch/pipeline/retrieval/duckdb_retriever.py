@@ -41,5 +41,4 @@ class DuckDBRetriever:
         """
         Closes the connection to the DuckDB database.
         """
-        # Close connection
         self.conn.close()
