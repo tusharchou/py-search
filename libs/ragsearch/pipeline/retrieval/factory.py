@@ -1,5 +1,6 @@
 """
-This module contains the RetrievalFactory class to create different types of retrievers based on configuration.
+This module contains the RetrievalFactory class
+to create different types of retrievers based on configuration.
 """
 
 from .duckdb_retriever import DuckDBRetriever
@@ -35,4 +36,4 @@ class RetrievalFactory:
         """
         Another public method to satisfy pylint's requirement for at least two public methods.
         """
-        pass
+        print("This is another public method.")
