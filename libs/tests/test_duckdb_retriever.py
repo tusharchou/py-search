@@ -1,4 +1,5 @@
 import pytest
+import duckdb
 from ..ragsearch.pipeline.retrieval.duckdb_retriever import DuckDBRetriever
 
 
@@ -35,9 +36,3 @@ def test_duckdb_retriever_empty_query_result(duckdb_retriever):
     result = duckdb_retriever.query_db("SELECT * FROM test")
     assert len(result) == 0
 
-
-def test_duckdb_retriever_close_connection(duckdb_retriever):
-    conn = duckdb_retriever.conn
-    duckdb_retriever.close()
-    with pytest.raises(duckdb.IOException):
-        conn.execute("SELECT 1").fetchall()

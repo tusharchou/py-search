@@ -1,4 +1,4 @@
-from duckdb_retriever import DuckDBRetriever
+from .duckdb_retriever import DuckDBRetriever
 
 class RetrievalFactory:
     """
