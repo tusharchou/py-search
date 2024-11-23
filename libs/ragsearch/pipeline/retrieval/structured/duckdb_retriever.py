@@ -12,7 +12,7 @@ class DuckDBRetriever:
         conn (duckdb.DuckDBPyConnection): The DuckDB connection object.
     """
 
-    def __init__(self, db_path='your_database.duckdb'):
+    def __init__(self, config):
         """
         Initializes the DuckDBRetriever with a connection to the DuckDB database.
 
@@ -20,9 +20,10 @@ class DuckDBRetriever:
             db_path (str): The path to the DuckDB database file. Defaults to 'your_database.duckdb'.
         """
         # Connect to DuckDB
-        self.conn = duckdb.connect(db_path)
+        self.db_path = config.get("db_path", ":memory:")
+        self.connection = duckdb.connect(self.db_path)
 
-    def query_db(self, query, params=None):
+    def query(self, query, params=None):
         """
         Executes an SQL query on the DuckDB database and fetches all results.
 
@@ -34,11 +35,10 @@ class DuckDBRetriever:
             list: A list of tuples containing the query results.
         """
         # Execute SQL query with parameters
-        result = self.conn.execute(query, params).fetchall()
-        return result
+        return self.connection.execute(query).fetchall()
 
     def close(self):
         """
         Closes the connection to the DuckDB database.
         """
-        self.conn.close()
+        self.connection.close()

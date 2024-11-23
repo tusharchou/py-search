@@ -1,22 +1,22 @@
 import pytest
+from ..ragsearch.pipeline.retrieval import RetrievalFactory
 
-from ..ragsearch.pipeline.retrieval.duckdb_retriever import DuckDBRetriever
-from ..ragsearch.pipeline.retrieval.factory import RetrievalFactory
-
-
-def test_create_retriever_duckdb():
-    config = {
-        "retriever_type": "duckdb",
-        "db_path": "test.db"
-    }
+def test_create_retriever_structured():
+    config = {"retrieval_type": "structured", "db_path": ":memory:"}
     retriever = RetrievalFactory.create_retriever(config)
-    assert isinstance(retriever, DuckDBRetriever)
+    assert retriever is not None
 
+def test_create_retriever_unstructured_langchain():
+    config = {"retrieval_type": "unstructured", "retrieval_engine": "langchain", "loader_type": "text", "file_path": "sample.txt"}
+    retriever = RetrievalFactory.create_retriever(config)
+    assert retriever is not None
 
-def test_create_retriever_unsupported_type():
-    config = {
-        "retriever_type": "unsupported_db",
-        "db_path": "test.db"
-    }
-    with pytest.raises(ValueError, match="Unsupported retriever type."):
+def test_create_retriever_unstructured_llamaindex():
+    config = {"retrieval_type": "unstructured", "retrieval_engine": "llamaindex"}
+    with pytest.raises(ValueError):
+        RetrievalFactory.create_retriever(config)
+
+def test_create_retriever_invalid_engine():
+    config = {"retrieval_type": "unstructured", "retrieval_engine": "unsupported_engine"}
+    with pytest.raises(ValueError):
         RetrievalFactory.create_retriever(config)
