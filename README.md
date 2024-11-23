@@ -58,53 +58,64 @@ Conventional or keyword search solutions in RAG produce limited results for know
 ## Project Structure
 ```plaintext
 ├── .github
-│   └── workflows
-│       └── python-publish.yml
+    └── workflows
+    │   └── python-publish.yml
 ├── .gitignore
 ├── LICENSE
 ├── README.md
 ├── docs
-│   ├── Makefile
-│   ├── conf.py
-│   ├── index.rst
-│   └── make.bat
+    ├── Makefile
+    ├── conf.py
+    ├── index.rst
+    └── make.bat
 ├── libs
-│   ├── __init__.py
-│   ├── ragsearch
-│   │   ├── __init__.py
-│   │   ├── hello_world.py
-│   │   └── pipeline
-│   │       ├── __init__.py
-│   │       └── retrieval
-│   │           ├── __init__.py
-│   │           ├── duckdb_retriever.py
-│   │           └── factory.py
-│   └── tests
-│       ├── __init__.py
-│       ├── test_duckdb_retriever.py
-│       ├── test_factory.py
-│       ├── test_hello_world.py
-│       └── test_retrieval.py
+    ├── __init__.py
+    ├── ragsearch
+    │   ├── __init__.py
+    │   ├── hello_world.py
+    │   └── pipeline
+    │   │   ├── __init__.py
+    │   │   └── retrieval
+    │   │       ├── __init__.py
+    │   │       ├── factory.py
+    │   │       ├── structured
+    │   │           ├── __init__.py
+    │   │           └── duckdb_retriever.py
+    │   │       └── unstructured
+    │   │           ├── __init__.py
+    │   │           ├── langchain_loader.py
+    │   │           └── llamaindex_loader.py
+    └── tests
+    │   ├── __init__.py
+    │   ├── sample.txt
+    │   ├── test_duckdb_retriever.py
+    │   ├── test_factory.py
+    │   └── test_hello_world.py
 ├── poetry.lock
 └── pyproject.toml
 ```
 
 ```markdown
-- **libs**: Contains the core components of the RAG architecture.
-  - **ragsearch**: Core components of the RAG architecture.
-    - **pipeline**: Contains the retrieval and generation components.
-      - **retrieval**: Contains the retriever and factory components.
-- **tests**: Contains the unit tests for the RAG components.
-- **docs**: Contains the documentation for the RAG components.
-- **.github**: Contains the GitHub Actions workflow for publishing the Python package to PyPI.
-- **pyproject.toml**: Contains the project metadata and dependencies.
-- **poetry.lock**: Contains the resolved dependencies for the project.
-- **LICENSE**: Contains the license information for the project.
-- **README.md**: Contains the project overview and structure.
-- **.gitignore**: Contains the files and directories to be ignored by Git.
-- **Makefile**: Contains the commands for building the documentation.
-- **conf.py**: Contains the configuration for the documentation.
-- **index.rst**: Contains the index page for the documentation.
-- **make.bat**: Contains the Windows-specific commands for building the documentation.
+- .github: Contains the GitHub Actions workflow files.
+- .gitignore: Specifies intentionally untracked files to ignore.
+- LICENSE: Specifies the project's open-source license.
+- README.md: The project's main documentation file.
+- **docs**: Contains the project's documentation files.
+- **libs**: Contains the project's source code.
+  - **ragsearch**: Contains the project's main source code.
+    - hello_world.py: A sample module to test the project setup.
+    - **pipeline**: Contains the project's pipeline modules.
+      - **retrieval**: Contains the project's retrieval modules.
+        - factory.py: A factory module to create retrievers.
+        - **structured**: Contains the project's structured retrievers.
+          - duckdb_retriever.py: A retriever module to query DuckDB.
+        - **unstructured**: Contains the project's unstructured retrievers.
+          - langchain_loader.py: A retriever module to load LangChain data.
+          - llamaindex_loader.py: A retriever module to load LlamaIndex data.
+  - **tests**: Contains the project's test files.
+    - sample.txt: A sample text file for testing.
+    - test_duckdb_retriever.py: A test module for the DuckDB retriever.
+    - test_factory.py: A test module for the factory module.
+    - test_hello_world.py: A test module for the hello_world module.
 ```
 
