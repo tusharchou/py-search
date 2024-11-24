@@ -9,8 +9,8 @@ ragsearch/
 ├── __init__.py
 ├── retrieval/
 │   ├── __init__.py
-│   ├── structured.py     # For databases (e.g., DuckDB)
-│   ├── unstructured.py   # For document loaders
+│   ├── structured.py     # For databases (e.g., DuckDB,sqlLite,MongoDB)
+│   ├── unstructured.py   # For document loaders (e.g., PDF, Word, HTML)
 │   ├── base.py           # Abstract base class
 ├── generation/
 │   ├── __init__.py
@@ -49,9 +49,8 @@ ragsearch/
 ├── main.py               # Main entry point
 ├── config.yaml           # Configuration file
 ├── README.md             # Project documentation
-├── README.md         # Documentation for the project
-├── RAG.md            # Documentation for Retrieval-Augmented Generation
-├── RAG-FAQ.md        # FAQ for Retrieval-Augmented Generation
+├── RAG.md                # Documentation for Retrieval-Augmented Generation
+├── RAG-FAQ.md            # FAQ for Retrieval-Augmented Generation
 ```
 
 
