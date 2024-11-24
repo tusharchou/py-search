@@ -2,9 +2,56 @@
 This project aims to build a Recommendation Engine leveraging an Agentic Retrieval-Augmented Generation (RAG) architecture to provide context-aware recommendations based on user queries. The MVP focuses on modularity and scalability while utilizing open-source technologies for cost efficiency.
 
 ## Project Structure
-The project is structured as follows:
-```
+Proposed Codebase Structure:
 
+```plaintext
+ragsearch/
+├── __init__.py
+├── retrieval/
+│   ├── __init__.py
+│   ├── structured.py     # For databases (e.g., DuckDB)
+│   ├── unstructured.py   # For document loaders
+│   ├── base.py           # Abstract base class
+├── generation/
+│   ├── __init__.py
+│   ├── langchain.py      # LangChain-based generation
+│   ├── llamaindex.py     # LlamaIndex-based generation
+│   ├── base.py           # Abstract base class
+├── fusion/
+│   ├── __init__.py
+│   ├── simple_fusion.py  # Simple query-context fusion
+│   ├── attention.py      # Advanced fusion strategies
+│   ├── base.py           # Abstract base class
+├── reranking/
+│   ├── __init__.py       # Factory for reranking components
+│   ├── bm25_reranker.py  # Reranking based on BM25 scores
+│   ├── neural_reranker.py # Reranking with neural models
+│   ├── base.py           # Abstract base class
+├── llms/
+│   ├── __init__.py       # Factory for LLMs
+│   ├── openai.py         # OpenAI wrapper
+│   ├── cohere.py         # Cohere wrapper
+│   ├── huggingface.py    # HuggingFace wrapper
+│   ├── base.py           # Abstract base class
+├── utils/
+│   ├── __init__.py
+│   ├── logger.py         # Logging utilities
+│   ├── config.py         # Configuration utilities
+│   ├── data.py           # Data utilities
+│   ├── metrics.py        # Evaluation metrics
+├── tests/
+│   ├── __init__.py
+│   ├── test_retrieval.py
+│   ├── test_generation.py
+│   ├── test_fusion.py
+│   ├── test_reranking.py
+│   ├── test_llms.py
+├── main.py               # Main entry point
+├── config.yaml           # Configuration file
+├── README.md             # Project documentation
+├── README.md         # Documentation for the project
+├── RAG.md            # Documentation for Retrieval-Augmented Generation
+├── RAG-FAQ.md        # FAQ for Retrieval-Augmented Generation
 ```
 
 
