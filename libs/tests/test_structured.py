@@ -62,7 +62,7 @@ class TestMongoDBRetriever(unittest.TestCase):
         mock_connection = mock_mongo_client.return_value
         mock_collection = mock_connection[config["db"]][config["collection"]]
         mock_collection.find.return_value = [{"result": "data"}]
-        result = retriever.query("SELECT * FROM test")
+        result = retriever.query({})
         self.assertEqual(result, [{"result": "data"}])
         mock_collection.find.assert_called_once_with({})
 
