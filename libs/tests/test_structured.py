@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from libs.ragsearch.retrieval.structured import (
 DuckDBRetriever,
 MongoDBRetriever,
@@ -62,7 +62,7 @@ class TestMongoDBRetriever(unittest.TestCase):
         mock_connection = mock_mongo_client.return_value
         mock_collection = mock_connection[config["db"]][config["collection"]]
         mock_collection.find.return_value = [{"result": "data"}]
-        result = retriever.query({})
+        result = retriever.query("SELECT * FROM test")
         self.assertEqual(result, [{"result": "data"}])
         mock_collection.find.assert_called_once_with({})
 
