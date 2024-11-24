@@ -2,67 +2,9 @@
 This project aims to build a Recommendation Engine leveraging an Agentic Retrieval-Augmented Generation (RAG) architecture to provide context-aware recommendations based on user queries. The MVP focuses on modularity and scalability while utilizing open-source technologies for cost efficiency.
 
 ## Project Structure
-```plaintext
-├── .github
-    └── workflows
-    │   └── python-publish.yml
-├── .gitignore
-├── LICENSE
-├── README.md
-├── docs
-    ├── Makefile
-    ├── conf.py
-    ├── index.rst
-    └── make.bat
-├── libs
-    ├── __init__.py
-    ├── ragsearch
-    │   ├── __init__.py
-    │   ├── hello_world.py
-    │   └── pipeline
-    │   │   ├── __init__.py
-    │   │   └── retrieval
-    │   │       ├── __init__.py
-    │   │       ├── factory.py
-    │   │       ├── structured
-    │   │           ├── __init__.py
-    │   │           └── duckdb_retriever.py
-    │   │       └── unstructured
-    │   │           ├── __init__.py
-    │   │           ├── langchain_loader.py
-    │   │           └── llamaindex_loader.py
-    └── tests
-    │   ├── __init__.py
-    │   ├── sample.txt
-    │   ├── test_duckdb_retriever.py
-    │   ├── test_factory.py
-    │   └── test_hello_world.py
-├── poetry.lock
-└── pyproject.toml
+The project is structured as follows:
 ```
 
-```markdown
-- .github: Contains the GitHub Actions workflow files.
-- .gitignore: Specifies intentionally untracked files to ignore.
-- LICENSE: Specifies the project's open-source license.
-- README.md: The project's main documentation file.
-- **docs**: Contains the project's documentation files.
-- **libs**: Contains the project's source code.
-  - **ragsearch**: Contains the project's main source code.
-    - hello_world.py: A sample module to test the project setup.
-    - **pipeline**: Contains the project's pipeline modules.
-      - **retrieval**: Contains the project's retrieval modules.
-        - factory.py: A factory module to create retrievers.
-        - **structured**: Contains the project's structured retrievers.
-          - duckdb_retriever.py: A retriever module to query DuckDB.
-        - **unstructured**: Contains the project's unstructured retrievers.
-          - langchain_loader.py: A retriever module to load LangChain data.
-          - llamaindex_loader.py: A retriever module to load LlamaIndex data.
-  - **tests**: Contains the project's test files.
-    - sample.txt: A sample text file for testing.
-    - test_duckdb_retriever.py: A test module for the DuckDB retriever.
-    - test_factory.py: A test module for the factory module.
-    - test_hello_world.py: A test module for the hello_world module.
 ```
 
 
