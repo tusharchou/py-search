@@ -1,105 +1,95 @@
 from abc import ABC, abstractmethod
-from langchain.document_loaders import PyPDFLoader, TextLoader
+from unstructured.partition.text import partition_text
+import requests
+
 
 class BaseRetriever(ABC):
     """
-    Abstract class for unstructured retrievers
+    Abstract class for unstructured data retrievers.
     """
-    @abstractmethod
-    def query(self, query: str):
-        pass
-
-    @abstractmethod
-    def close(self):
-        pass
 
     @abstractmethod
     def connect(self):
+        """Establish a connection or load data source."""
         pass
 
+    @abstractmethod
+    def query(self, query: str):
+        """Perform a query on the data source."""
+        pass
 
-class PDFRetriever(BaseRetriever):
+class PDFRetriever(BaseRetriever, ABC):
     """
-    A class to retrieve data from PDF documents using LangChain's PDF loader.
+    A class to retrieve text data from PDF files using the Unstructured API.
     """
 
     def __init__(self, config):
         self.file_path = config.get("file_path")
-        self.loader = None
+        self.api_url = config.get("api_url", "https://api.unstructured.io/extract")  # Default API endpoint
+        self.api_key = config.get("api_key")
 
-    def connect(self):
+    def query(self, query: str = None):
         """
-        Load the PDF file using LangChain's PyPDFLoader
+        Extract and return content from the PDF file using the Unstructured API.
         """
-        if not self.loader:
-            self.loader = PyPDFLoader(self.file_path)
+        if not self.file_path or not self.api_url or not self.api_key:
+            raise ValueError("File path, API URL, and API key must be provided.")
 
-    def query(self, query: str):
-        """
-        Perform a query on the loaded PDF document
-        """
-        self.connect()
-        documents = self.loader.load()
-        # Here you can use any querying mechanism, for now, returning the document contents
-        return [doc.page_content for doc in documents]
+        with open(self.file_path, "rb") as f:
+            response = requests.post(
+                self.api_url,
+                headers={"Authorization": f"Bearer {self.api_key}"},
+                files={"file": f},
+            )
 
-    def close(self):
-        """
-        Close the PDF loader (if needed)
-        """
-        self.loader = None
+        if response.status_code != 200:
+            raise RuntimeError(f"API request failed: {response.text}")
+
+        content = response.json().get("text", "")
+
+        if query:
+            # Basic query-based filtering
+            return [line for line in content.split("\n") if query.lower() in line.lower()]
+        return content
 
 
-class TextRetriever(BaseRetriever):
+class TextRetriever(BaseRetriever, ABC):
     """
-    A class to retrieve data from text files using LangChain's TextLoader.
+    A class to retrieve text data from plain text files using the unstructured package.
     """
 
     def __init__(self, config):
         self.file_path = config.get("file_path")
-        self.loader = None
 
-    def connect(self):
+    def query(self, query: str = None):
         """
-        Load the text file using LangChain's TextLoader
+        Extract and return content from the text file.
+        Optionally, the query parameter can be used for filtering or searching.
         """
-        if not self.loader:
-            self.loader = TextLoader(self.file_path)
+        if not self.file_path:
+            raise ValueError("File path must be provided in the config.")
 
-    def query(self, query: str):
-        """
-        Perform a query on the loaded text document
-        """
-        self.connect()
-        documents = self.loader.load()
-        # Here you can use any querying mechanism, for now, returning the document contents
-        return [doc.page_content for doc in documents]
+        elements = partition_text(filename=self.file_path)
+        content = "\n".join([str(el) for el in elements])
 
-    def close(self):
-        """
-        Close the Text loader (if needed)
-        """
-        self.loader = None
+        if query:
+            # Basic query-based filtering (improve this logic as needed)
+            return [line for line in content.split("\n") if query.lower() in line.lower()]
+        return content
 
 
-def get_unstructured_retriever(config):
+def get_retriever(config):
     """
-    Factory to dynamically select the unstructured retriever based on config
-
-    Example usage:
-    config = {
-                "retrieval_type": "unstructured",
-                "file_type": "pdf",
-                "file_path": "path_to_your_pdf.pdf"
-            }
+    Factory method to get the appropriate unstructured data retriever.
     """
     retrieval_type = config.get("retrieval_type")
     if retrieval_type == "unstructured":
-        if config.get("file_type") == "pdf":
+        file_type = config.get("file_type")
+        if file_type == "pdf":
             return PDFRetriever(config)
-        elif config.get("file_type") == "text":
+        elif file_type == "text":
             return TextRetriever(config)
         else:
-            raise ValueError(f"Unsupported file type: {config.get('file_type')}")
+            raise ValueError(f"Unsupported file type: {file_type}")
     else:
         raise ValueError(f"Unsupported retrieval type: {retrieval_type}")
