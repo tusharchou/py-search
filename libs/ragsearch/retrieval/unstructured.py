@@ -21,6 +21,23 @@ class BaseRetriever(ABC):
 class PDFRetriever(BaseRetriever, ABC):
     """
     A class to retrieve text data from PDF files using the Unstructured API.
+
+    Args:
+        config (dict): Configuration parameters for the retriever.
+
+        Example usage:
+        config = {
+            "file_path": "path/to/file.pdf",
+            "api_url": "https://api.unstructured.io/extract",
+            "api_key": "your-unstructured-api-key"
+        }
+
+    Returns:
+        PDFRetriever: An instance of the PDFRetriever class.
+
+    Raises:
+        ValueError: If file path, API URL, or API key is not provided.
+        RuntimeError: If the API request fails.
     """
 
     def __init__(self, config):

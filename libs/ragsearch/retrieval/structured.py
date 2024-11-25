@@ -124,17 +124,16 @@ def get_retriever(config):
     """
     Factory to dynamically select the retriever based on config.
 
-    Example usage:
+    Args:
+        config (dict): Configuration dictionary containing retrieval type and database parameters.
+
+        Example usage:
         config = {
             "retrieval_type": "structured",
             "db_type": "duckdb" or "sqlite" or "mongodb",
             "db_path": "path_to_your_duckdb_file.db",
             "uri": "mongodb://localhost:27017/",
         }
-
-    Args:
-        config (dict): Configuration dictionary containing retrieval type and database parameters.
-
     Returns:
         BaseRetriever: An instance of a retriever class based on the configuration.
 
